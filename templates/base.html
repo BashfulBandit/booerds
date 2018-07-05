@@ -1,0 +1,36 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html>
+	<!-- Head -->
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="boo(kn)erds - E-commerce Book Store for UGA CSCI-4050 - Software Engineering">
+		<meta name="author" content="Jonathan Templeton, Eric Older, Revati Khatri, Mayank Verma, Ankita Joshi, Niraj Kadam">
+		<title>{% block title %}{% endblock %}</title>
+
+		<!-- Pull in the rest of head tag -->
+		{% include 'head.html' %}
+
+	</head>
+	<!-- End Head -->
+	<!-- Body -->
+	<body>
+
+		<!-- Pull in base navbar tag. -->
+		{% include 'navbar.html' %}
+
+		<!-- Define block 'content' -->
+		{% block content %}
+		{% endblock %}
+
+		<!-- Pull in base footer tag. -->
+		{% include 'footer.html' %}
+
+		<!-- Pull in base JS scripts. -->
+		{% include 'scripts.html' %}
+
+	</body>
+	<!-- End Body -->
+</html>
