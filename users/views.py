@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm
 from .models import User
@@ -35,7 +36,6 @@ def user_logout(request):
     logout(request)
     return redirect('/')
 
-
 def user_register(request):
     # If user is already logged in then redirect to profile.
     if request.user.is_authenticated:
@@ -43,11 +43,15 @@ def user_register(request):
     # If POST then check the form for validity and login user in.
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
+        print(form)
         if form.is_valid():
             form.save()
             username = form.cleaned_data['email']
+            print(username)
             raw_password = form.cleaned_data['password1']
+            print(raw_password)
             user = authenticate(request, username=username, password=raw_password)
+            print(user)
             if user is not None:
                 login(request, user)
                 return redirect('/u/' + str(user.id))
@@ -58,13 +62,14 @@ def user_register(request):
     }
     return render(request, 'users/register.html', context)
 
+@login_required()
 def user_profile(request, id):
     # If user is logged in then render their profile page.
-    if request.user.is_authenticated:
-        user = User.objects.get(pk=id)
-        context = {
-            'user': user,
-        }
-        return render(request, 'users/profile.html', context)
-    # Else redirect them to login page.
-    return redirect('/u/login/')
+    # if request.user.is_authenticated:
+    user = User.objects.get(pk=id)
+    context = {
+        'user': user,
+    }
+    return render(request, 'users/profile.html', context)
+    # # Else redirect them to login page.
+    # return redirect('/u/login/')

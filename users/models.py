@@ -17,15 +17,10 @@ from django.contrib.auth.models import AbstractUser
 ## get_session_auth_hash(): returns HMAC of the password field.                                 ##
 ##################################################################################################
 class User(AbstractUser):
-    USER_TYPES = [
-        ('C', 'Customer'),
-        ('P', 'Publisher'),
-        ('V', 'Vendor'),
-    ]
+    username = None
+    email = models.EmailField(unique=True, blank=False)
     name = models.CharField(max_length=254, blank=False)
-    email = models.EmailField(max_length=254, unique=True, blank=False)
-    user_type = models.CharField(max_length=1, choices=USER_TYPES, default='C')
-    date_of_birth = models.DateTimeField(blank=False)
+    date_of_birth = models.DateField(blank=False)
     address = models.CharField(max_length=254, blank=False)
     zipcode = models.CharField(max_length=20, blank=False)
     city = models.CharField(max_length=50, blank=False)
@@ -35,7 +30,6 @@ class User(AbstractUser):
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = [
         'name',
-        'user_type',
         'date_of_birth'
         'address',
         'zipcode',
