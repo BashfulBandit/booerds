@@ -1,4 +1,4 @@
-<!-- templates/base.html -->
+<!-- templates/shop/base.html -->
 <!DOCTYPE html>
 <html>
 	<!-- Head -->
@@ -11,7 +11,7 @@
 		<title>{% block title %}{% endblock %}</title>
 
 		<!-- Pull in the rest of head tag -->
-		{% include 'head.html' %}
+		{% include 'shop/head.html' %}
 
 	</head>
 	<!-- End Head -->
@@ -19,17 +19,17 @@
 	<body>
 
 		<!-- Pull in base navbar tag. -->
-		{% include 'navbar.html' %}
+		{% include 'shop/navbar.html' %}
 
 		<!-- Define block 'content' -->
 		{% block content %}
 		{% endblock %}
 
 		<!-- Pull in base footer tag. -->
-		{% include 'footer.html' %}
+		{% include 'shop/footer.html' %}
 
 		<!-- Pull in base JS scripts. -->
-		{% include 'scripts.html' %}
+		{% include 'shop/scripts.html' %}
 
 	</body>
 	<!-- End Body -->
