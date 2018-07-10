@@ -1,33 +1,40 @@
 <!-- templates/shop/navbar.html -->
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-	<div class="container">
-		<a class="navbar-brand" href="{% url 'shop:index' %}">boo(kn)erds</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
+	<a class="navbar-brand" href="#">boo(kn)erds</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			{% if request.user.is_authenticated %}
 				<li class="nav-item">
-					<input class="list-group-item" type="text" placeholder="Search..">
+					<a class="nav-link" href="#">Cart</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'shop:index' %}">Home</a>
+					<a class="nav-link" href="#">Profile</a>
 				</li>
-				{% if request.user.is_authenticated %}
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'shop:logout' %}">Logout</a>
-					</li>
-				{% else %}
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'shop:login' %}">Login</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'shop:register' %}">Register</a>
-					</li>
-				{% endif %}
-			</ul>
-		</div>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Logout</a>
+				</li>
+			{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="#">Login</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Register</a>
+				</li>
+			{% endif %}
+		</ul>
+		<form class="form-inline my-2 my-lg-0">
+			<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+			<select class="custom-select" name="">
+				<option value="title">Title</option>
+				<option value="author">Author</option>
+				<option value="isbn">ISBN</option>
+			</select>
+			<button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
 	</div>
 </nav>
 <!-- End Navigation -->

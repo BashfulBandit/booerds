@@ -1,44 +1,44 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from localflavor.us.models import (
+	USStateField,
+	USZipCodeField,
+)
 
 # Create your models here.
-##################################################################################################
-## Below is a list of functions inherited from the AbstractBaseUser                             ##
-## get_full_name():                                                                             ##
-## get_short_name():                                                                            ##
-## get_username(): return self.USERNAME_FIELD                                                   ##
-## classmethod clean(): normalizes the username by calling normalize_username()                 ##
-## classmethod get_email_field_name(): return self.EMAIL_FIELD                                  ##
-## is_authenticated: Attribute to say whether the user is logged in.                            ##
-## is_anonymous: Attribute given to Users who aren't logged in.                                 ##
-## set_password(raw_password): Hashes password and sets User Password to it.                    ##
-## check_password(raw_password): Returns True is the raw_password matches stored hash password. ##
-## set_unusable_password(): Marks user as having no password set.                               ##
-## has_usable_password(): Returns False if set_unusable_password has been called.               ##
-## get_session_auth_hash(): returns HMAC of the password field.                                 ##
-##################################################################################################
-class MyUser(AbstractUser):
-	username = None
-	email = models.EmailField(unique=True, blank=False)
-	full_name = models.CharField(max_length=254, blank=False)
+class Address(models.Model):
+	street_address = models.CharField(max_length=100, blank=False)
+	zipcode = USZipCodeField(blank=False)
+	city = models.CharField(max_length=50, blank=False)
+	state = USStateField(blank=False)
 
-	USERNAME_FIELD = 'email'
-	EMAIL_FIELD = 'email'
-	REQUIRED_FIELDS = [
-		'full_name',
-	]
+	def __str__(self):
+		return self.street_address
 
-# Forms you can use with this Custom User Model
-# AuthenticationForm: Uses the username field specified by USERNAME_FIELD
-# SetPasswordForm
-# PasswordChangeForm
-# AdminPasswordChangeForm
-#
-# PasswordReserForm: Assumes that the Custom User Model that stores the user's email
-#   address with the name returned by get_email_field_name() that can be used to identify
-#   the user and a boolean field named is_active to prevent password resets for inactive
-#   users.
-#
-# The following Forms need to be rewritten
-# UserCreationForm
-# UserChangeForm
+class Customer(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=False)
+	address = models.OneToOneField(Address, on_delete=models.CASCADE, blank=False)
+	is_customer = models.BooleanField(default=True)
+	is_vendor = models.BooleanField(default=False)
+	# Below will be the other attributes like:
+	# 	cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
+	# 	orders = models.OneToManyField(Order, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.user.email
+
+class Vendor(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=False)
+	address = models.OneToOneField(Address, on_delete=models.CASCADE, blank=False)
+	is_customer = models.BooleanField(default=False)
+	is_vendor = models.BooleanField(default=True)
+	# Below will be the other attributes like:
+	# 	books = models.OneToManyField(Book, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.user.email
+# Other classes to define.
+# Book
+# Cart
+# Order
+# Promotion
