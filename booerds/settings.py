@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 	'localflavor',
 	'bookstore',
     'book',
+	'users',
 ]
 
 MIDDLEWARE = [

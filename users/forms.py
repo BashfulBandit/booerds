@@ -1,25 +1,25 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from local.us.models import (
+from localflavor.us.models import (
     USStateField,
     USZipCodeField,
 )
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import (
-    Address,
     Customer,
     Vendor,
 )
 
 # Create your forms here.
-class AddressCreationForm(ModelForm):
+class MyUserCreationForm(UserCreationForm):
     class Meta:
-        model = Address
+        model = User
         fields = [
-            'street_address',
-            'zipcode',
-            'city',
-            'state',
+            'first_name',
+            'last_name',
+            'email',
+            'username',
         ]
 
 class CustomerCreationForm(ModelForm):
@@ -27,10 +27,22 @@ class CustomerCreationForm(ModelForm):
         model = Customer
         fields = [
             'date_of_birth',
+            'street_address',
+            'zipcode',
+            'city',
+            'state',
         ]
-# class VendorCreationForm(ModelForm):
+class VendorCreationForm(ModelForm):
+    class Meta:
+        model = Vendor
+        fields = [
+            'street_address',
+            'zipcode',
+            'city',
+            'state',
+        ]
 
-# Apparently we don't need a form specially 
+# Apparently we don't need a form specially
 # for updating an item.
 # See the first example:
 # https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/

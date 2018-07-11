@@ -1,0 +1,15 @@
+<!-- templates/bookstore/register.html -->
+{% extends 'bookstore/base.html' %}
+
+{% block content %}
+<div class="container">
+	<!-- TODO Need to style this. -->
+	<h1>{{ form_name }}</h1>
+	<form method="post">
+	    {% csrf_token %}
+		{{ user_form.as_p }}
+		{{ form.as_p }}
+    <input class="btn btn-primary" type="submit" value="Submit"/>
+	</form>
+</div>
+{% endblock %}
