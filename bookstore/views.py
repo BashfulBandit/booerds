@@ -147,14 +147,35 @@ def list(request):
     # Define the template and an empty context dict.
     template_name = 'bookstore/list.html'
     context = {}
+    
+    #Extract information from the request object.
+    
+    text = request.GET["search_text"]
+    
+    category = request.GET["category"]
+        
+    #Creating the list of display items.
+    display_results = []
 
-    # Get all the books from the DB
-    books = Book.objects.all()
+    #These conditions represent the filtering. 
+    
+    if(category == "title"):
+            
+        display_results = Book.objects.all().filter(title__contains=text)
+                     
+    elif(category == "author"):
+        display_results = Book.objects.all().filter(author__contains=text)
+                     
+    elif(category == "isbn"):
+        display_results = Book.objects.all().filter(ISBN=text)
+    
+    else:
+        display_results = Book.objects.all().filter(subject=text)
+    
     # Append the books into the context dict to send to the template.
     context.update({
-        'books': books,
+        'books': display_results,
     })
-
     # Render the response.
     return render(request, template_name, context)
 

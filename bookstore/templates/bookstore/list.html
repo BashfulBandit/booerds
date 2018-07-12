@@ -22,11 +22,11 @@
                 {% for book in books %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        {% if not book.image %}
+                        <!--{% if not book.image %}
                             <a href="{{ book.get_absolute_url }}"><img class="card-img-top" src="https://placehold.it/900x400" alt=""></a>
-                        {% else %}
-                            <a href="{{ book.get_absolute_url }}"><img class="card-img-top" src="{{ book.image.url }}" alt=""></a>
-                        {% endif %}
+                        {% else %} -->
+                            <a href="{{ book.get_absolute_url }}"><img class="card-img-top" src="{{ book.image.url }}" alt="" width="200px" height="320px"></a>
+                        <!--{% endif %} -->
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
