@@ -26,13 +26,13 @@
 				</li>
 			{% endif %}
 		</ul>
-		<form class="form-inline">
-			<input class="form-control" type="search" placeholder="Search" aria-label="Search">
-			<select class="custom-select" name="">
+		<form class="form-inline" action ="{% url 'bookstore:list' %}" >
+			<input class="form-control" name = "search_text" type="search" placeholder="Search" aria-label="Search">
+			<select class="custom-select" name="category">
 				<option value="title">Title</option>
 				<option value="author">Author</option>
 				<option value="isbn">ISBN</option>
-				<option value="isbn">Subject</option>
+				<option value="subject">Subject</option>
 			</select>
 			<button class="btn btn-success" type="submit">Search</button>
 		</form>
