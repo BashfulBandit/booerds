@@ -42,7 +42,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=raw_password)
             if user is not None:
                 login(request, user)
-                return redirect('bookstore:profile', id=user.id)
+            return redirect('bookstore:profile', id=user.id)
     else:
         form = AuthenticationForm()
         context.update({
@@ -74,11 +74,8 @@ def customer_register(request):
             username = user_form.cleaned_data['username']
             raw_password = user_form.cleaned_data['password1']
             user = authenticate(request, username=username, password=raw_password)
-            print(user.id)
-            print(customer_form)
-            customer_form.cleaned_data['user'] = user.id
-            print(customer_form)
-            customer_form.save()
+            customer_form.cleaned_data['user'] = user
+#            customer_form.save()
             if user is not None:
                 login(request, user)
                 return redirect('bookstore:profile', id=user.id)

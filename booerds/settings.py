@@ -25,7 +25,7 @@ SECRET_KEY = '%0ydcp-mg-5#h_7cb1(tu^296(+4tpkz!&nb7#6=(7eqv^)dw^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 

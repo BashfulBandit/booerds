@@ -25,6 +25,9 @@
 					<a class="nav-link" href="{% url 'bookstore:register' %}">Register</a>
 				</li>
 			{% endif %}
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'bookstore:list' %}">Books</a>
+			</li>
 		</ul>
 		<form class="form-inline">
 			<input class="form-control" type="search" placeholder="Search" aria-label="Search">
@@ -34,7 +37,7 @@
 				<option value="isbn">ISBN</option>
 				<option value="isbn">Subject</option>
 			</select>
-			<button class="btn btn-success" type="submit">Search</button>
+			<button class="btn btn-primary" type="submit">Search</button>
 		</form>
 	</div>
 </nav>
