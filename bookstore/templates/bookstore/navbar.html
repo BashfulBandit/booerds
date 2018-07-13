@@ -12,25 +12,25 @@
 					<a class="nav-link" href="#">Cart</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'bookstore:profile' id=request.user.id %}">Profile</a>
+					<a class="nav-link" href="{% url 'users:profile' request.user.id %}">Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'bookstore:user_logout' %}">Logout</a>
+					<a class="nav-link" href="{% url 'users:user_logout' %}">Logout</a>
 				</li>
 			{% else %}
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'bookstore:user_login' %}">Login</a>
+					<a class="nav-link" href="{% url 'users:user_login' %}">Login</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'bookstore:register' %}">Register</a>
+					<a class="nav-link" href="{% url 'users:customer_register' %}">Register</a>
 				</li>
 			{% endif %}
 			<li class="nav-item">
-				<a class="nav-link" href="{% url 'bookstore:list' %}">Books</a>
+				<a class="nav-link" href="{% url 'book:list' %}">Books</a>
 			</li>
 		</ul>
-		<form class="form-inline" action ="{% url 'bookstore:list' %}" >
-			<input class="form-control" name = "search_text" type="search" placeholder="Search" aria-label="Search">
+		<form class="form-inline" action ="{% url 'book:list' %}">
+			<input class="form-control" name="search_text" type="search" placeholder="Search" aria-label="Search">
 			<select class="custom-select" name="category">
 				<option value="title">Title</option>
 				<option value="author">Author</option>

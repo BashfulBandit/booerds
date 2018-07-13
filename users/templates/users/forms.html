@@ -1,0 +1,17 @@
+{% extends 'bookstore/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ form_name }}</h2>
+        <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {{ user_form|crispy }}
+        {{ form|crispy }}
+        </br>
+        <button type="submit" class="btn btn-primary p-1">Register</button>
+    </form>
+</div>
+{% endblock %}

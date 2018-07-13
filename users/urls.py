@@ -1,16 +1,13 @@
 from django.urls import (
-    include,
     re_path,
 )
 
-from .views import (
-    customer,
-    vendor,
-)
+from . import views
 
 urlpatterns = [
-    re_path('^$', include('django.contrib.auth.urls')),
-    re_path('^register/$', customer.CustomerRegisterView.as_view(), name='customer_register'),
-    re_path('^register/customer/$', customer.CustomerRegisterView.as_view(), name='customer_register'),
-    re_path('^register/vendor/$', vendor.VendorRegisterView.as_view(), name='customer_register'),
+    re_path('^$', views.user_login, name='user_login'),
+    re_path('^(?P<id>(\d+))/$', views.profile, name='profile'),
+    re_path('^logout/$', views.user_logout, name='user_logout'),
+    re_path('^register/$', views.customer_register, name='customer_register'),
+    re_path('^register/vendor/$', views.vendor_register, name='vendor_register'),
 ]
