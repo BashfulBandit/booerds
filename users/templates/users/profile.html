@@ -1,7 +1,25 @@
 {% extends 'bookstore/base.html' %}
 
+{% block title %}boo(kn)erds - {{ request.user.first_name }}{% endblock %}
+
 {% block content %}
 <div class="container">
-    <h3>Profile Page - {{ request.user.id }}</h3>
+  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+  <p>Username: {{ user.username }}</p>
+  <p>Email: {{ user.email }}</p>
+	{% if profile is not None %}
+	  <p>Street Address: {{ profile.street_address  }}</p>
+		<p>Zipcode: {{ profile.zipcode }}</p>
+		<p>City: {{ profile.city }}</p>
+		<p>State: {{ profile.state }}</p>
+		{% if profile.is_customer %}
+			<p>Date of Birth: {{ profile.date_of_birth }}</p>
+			<p>Profile Type: Customer</p>
+			<!-- TODO Print out all of the Customer Orders -->
+		{% else %}
+			<p>Profile Type: Vendor</p>
+			<!-- TODO Print out all of the Vendor Books -->
+		{% endif %}
+	{% endif %}
 </div>
 {% endblock %}

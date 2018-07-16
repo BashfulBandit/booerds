@@ -132,10 +132,10 @@ STATICFILE_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+# SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
-SESSION_ENGINE = "django.contrib.sessions.backends.db"
-
-
-
-
-
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_USE_TLS = True

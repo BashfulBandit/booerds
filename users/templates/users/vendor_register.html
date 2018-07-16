@@ -2,6 +2,8 @@
 
 {% load crispy_forms_tags %}
 
+{% block title %}boo(kn)erds - {{ form_button }}{% endblock %}
+
 {% block content %}
 <div class="container">
     <h2>{{ form_name }}</h2>
@@ -11,7 +13,8 @@
         {{ user_form|crispy }}
         {{ form|crispy }}
         </br>
-        <button type="submit" class="btn btn-primary p-1">Register</button>
+        <button type="submit" class="btn btn-primary p-1">{{ form_button }}</button>
+				<a href="{% url 'users:user_login' %}" class="btn btn-primary p-1">Already Registered?</a>
     </form>
 </div>
 {% endblock %}
