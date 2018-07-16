@@ -8,7 +8,13 @@ from django.urls import reverse
 
 # Create your models here.
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=False)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='customer',
+        blank=False,
+        primary_key=True
+    )
     street_address = models.CharField(max_length=100, blank=False)
     zipcode = USZipCodeField(blank=False)
     city = models.CharField(max_length=50, blank=False)
@@ -26,7 +32,13 @@ class Customer(models.Model):
         return reverse('users:profile', kwargs={'id': self.user.id})
 
 class Vendor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='vendor',
+        blank=True,
+        primary_key=True
+    )
     street_address = models.CharField(max_length=100, blank=False)
     zipcode = USZipCodeField(blank=False)
     city = models.CharField(max_length=50, blank=False)

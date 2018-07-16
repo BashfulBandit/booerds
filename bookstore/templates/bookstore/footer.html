@@ -3,10 +3,12 @@
 <footer class="py-4 m-1 bg-dark">
 	<div class="container">
 		<div class="row">
-			<div class="col">
-				<a class="m-0 text-white" href="{% url 'users:vendor_register' %}">Vendor Registration</a>
-			</div>
-			<div class="col">
+			{% if not request.user.is_authenticated %}
+				<div class="col text-center">
+					<a class="m-0 text-white" href="{% url 'users:vendor_register' %}">Vendor Registration</a>
+				</div>
+			{% endif %}
+			<div class="col text-center">
 				<p class="m-0 text-white">Copyright &copy; UGA CSCI-4050 Software Engineering 2018</p>
 			</div>
 		</div>
