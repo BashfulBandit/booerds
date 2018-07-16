@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'localflavor',
 	'crispy_forms',
-	'bookstore',
-    'book',
-	'users',
-    'cart',
+	'bookstore.apps.BookstoreConfig',
+    'book.apps.BookConfig',
+	'users.apps.UsersConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
