@@ -17,4 +17,11 @@ class Book(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        
         return reverse('book:details', kwargs={'id': self.id})
+
+    def add_to_cart_url(self):
+        
+        return reverse('cart:cart', kwargs={'id': self.id})
+    
+    

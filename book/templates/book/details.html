@@ -18,7 +18,7 @@
                 <h4>${{ book.sale_price }}</h4>
                 <p class="card-text">By: {{ book.author }}</p>
             </div>
-            <a href="#" class="btn btn-success">Add to Cart</a>
+            <a href="{{ book.add_to_cart_url }}" class="btn btn-success">Add to Cart</a>
         </div>
         <!-- /.card -->
         {% if book.summary %}

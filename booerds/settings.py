@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 	'bookstore',
     'book',
 	'users',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,11 @@ MEDIA_URL = '/media/'
 STATICFILE_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+
+
+
+

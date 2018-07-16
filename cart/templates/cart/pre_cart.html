@@ -1,0 +1,26 @@
+{% extends 'bookstore/base.html' %}
+
+{% block title %}boo(kn)erds - Details{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<div class="row">
+  <div class="col-lg-4">
+    <img class="rounded-circle" src="{% static "cart/home.jpeg" %}" alt="Generic placeholder image" width="100" height="100">
+    <h2>Go Home</h2>
+    <p><a class="btn btn-secondary" href="/" role="button">Click Here! &raquo;</a></p>
+  </div><!-- /.col-lg-4 -->
+  <div class="col-lg-4">
+    <img class="rounded-circle" src="{% static "cart/cart.png" %}" alt="Generic placeholder image" width="100" height="100">
+    <h2>View Cart</h2>
+    <p><a class="btn btn-secondary" href="cart/show_cart" role="button">Click Here! &raquo;</a></p>
+  </div><!-- /.col-lg-4 -->
+  <div class="col-lg-4">
+    <img class="rounded-circle" src="{% static "cart/checkout.jpg" %}" alt="Generic placeholder image" width="100" height="100">
+    <h2>Proceed to Checkout</h2>
+    <p><a class="btn btn-secondary" href="http://localhost:8000/cart/checkout" role="button">Click Here! &raquo;</a></p>
+  </div><!-- /.col-lg-4 -->
+</div><!-- /.row -->
+    
+{% endblock %}

@@ -14,6 +14,7 @@ def list(request):
     category = ''
     text = ''
 
+ 
     #Extract information from the request object.
     if request.method == 'GET' and 'search_text' in request.GET:
         text = request.GET['search_text']
