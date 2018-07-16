@@ -37,7 +37,7 @@ from .forms import (
 )
 
 def user_login(request):
-	template_name = 'users/forms.html'
+	template_name = 'users/login.html'
 	context = {}
 
 	if request.user.is_authenticated:
@@ -54,9 +54,7 @@ def user_login(request):
 	else:
 		form = AuthenticationForm()
 		context.update({
-			'form_name': 'Login',
 			'form': form,
-			'form_button': 'Login',
 		})
 		return render(request, template_name, context)
 
@@ -76,6 +74,7 @@ def profile(request, id):
 		return redirect('bookstore:home')
 	if str(request.user.id) == id:
 		user = get_object_or_404(User, id=id)
+		profile = None
 		if hasattr(user, 'customer'):
 			profile = user.customer
 		elif hasattr(user, 'vendor'):
@@ -114,7 +113,7 @@ def activate(request, uidb64, token):
 		return render(request, template_name, context)
 
 def customer_register(request):
-	template_name = 'users/forms.html'
+	template_name = 'users/customer_register.html'
 	context = {}
 
 	if request.user.is_authenticated:
@@ -157,15 +156,13 @@ def customer_register(request):
 		customer_form = CustomerCreationForm()
 
 		context.update({
-			'form_name': 'Customer Registration Form',
 			'user_form': user_form,
 			'form': customer_form,
-			'form_button': 'Register',
 		})
 	return render(request, template_name, context)
 
 def vendor_register(request):
-	template_name = 'users/forms.html'
+	template_name = 'users/vendor_register.html'
 	context = {}
 
 	if request.user.is_authenticated:

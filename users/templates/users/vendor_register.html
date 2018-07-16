@@ -14,6 +14,7 @@
         {{ form|crispy }}
         </br>
         <button type="submit" class="btn btn-primary p-1">{{ form_button }}</button>
+				<a href="{% url 'users:user_login' %}" class="btn btn-primary p-1">Already Registered?</a>
     </form>
 </div>
 {% endblock %}
