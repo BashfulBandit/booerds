@@ -1,20 +1,27 @@
+<!-- templates/users/vendor_register.html -->
 {% extends 'bookstore/base.html' %}
 
 {% load crispy_forms_tags %}
 
-{% block title %}boo(kn)erds - {{ form_button }}{% endblock %}
+{% block title %}boo(kn)erds - Vendor Register{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>{{ form_name }}</h2>
-        <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        {{ user_form|crispy }}
-        {{ form|crispy }}
-        </br>
-        <button type="submit" class="btn btn-primary p-1">{{ form_button }}</button>
-				<a href="{% url 'users:user_login' %}" class="btn btn-primary p-1">Already Registered?</a>
+<div class="row justify-content-center">
+  <div class="col-4">
+      <h2>Vendor Registration</h2>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-4">
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {{ user_form|crispy }}
+      {{ form|crispy }}
+      </br>
+      <button type="submit" class="btn btn-primary p-1">Register</button>
+      <a href="{% url 'users:user_login' %}" class="btn btn-primary p-1">Already Registered?</a>
     </form>
+  </div>
 </div>
 {% endblock %}

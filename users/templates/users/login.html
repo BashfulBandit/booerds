@@ -1,3 +1,4 @@
+<!-- templates/users/login.html -->
 {% extends 'bookstore/base.html' %}
 
 {% load crispy_forms_tags %}
@@ -5,16 +6,18 @@
 {% block title %}boo(kn)erds - Login{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="row justify-content-around">
+  <div class="col-4">
     <h2>Login</h2>
-        <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        {{ user_form|crispy }}
-        {{ form|crispy }}
-        </br>
-        <button type="submit" class="btn btn-primary p-1">Login</button>
-				<button type="button" class="btn btn-primary p-1">Forgot Password</button>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {{ user_form|crispy }}
+      {{ form|crispy }}
+      </br>
+      <button type="submit" class="btn btn-primary p-1">Login</button>
+    	<!-- <button type="button" class="btn btn-primary p-1">Forgot Password</button> -->
     </form>
+  </div>
 </div>
 {% endblock %}

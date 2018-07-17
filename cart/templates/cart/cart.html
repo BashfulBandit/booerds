@@ -1,33 +1,41 @@
+<!-- templates/cart/cart.html -->
 {% extends 'bookstore/base.html' %}
+{% load static %}
 
 {% block title %}boo(kn)erds - Details{% endblock %}
 
 {% block content %}
-
-{% load static %}
-<div class="container">
-
-  <h2>Welcome to the cart page!</h2>
-
-  <div class="row">
-    <div class="col-4">Book</div>
-    <div class="col-4">Price</div>
-    <div class="col-4">Quantity</div>
+<div class="row justify-content-center">
+  <div class="col-auto">
+    <h2>Welcome to the cart page!</h2>
   </div>
-  <!-- Now we dynamically show the book objects in our cart page-->
-  {% for book in cart %}
-  <div class="row">
-    <div class="col-4">{{book.title}}</div>
-    <div class="col-4">{{book.sale_price}}</div>
-    <div class="col-4">1</div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Book</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in cart %}
+        <tr>
+          <td>{{ book.title }}</td>
+          <td>1</td>
+          <td>{{ book.sale_price }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-auto text-right">
+    <h2>Proceed to Checkout</h2>
+    <a class="btn btn-primary" href="http://localhost:8000/cart/checkout">Click Here! &raquo;</a>
   </div>
-  {% endfor %}
-
-{% load static %}
-<div class="col-lg-4">
-<h2>Proceed to Checkout</h2>
-<p><a class="btn btn-secondary" href="http://localhost:8000/cart/checkout" role="button">Click Here! &raquo;</a></p>
-</div><!-- /.col-lg-4 -->
-
-</div> <!-- /container -->
+</div>
 {% endblock %}
