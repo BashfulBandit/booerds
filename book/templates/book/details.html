@@ -4,36 +4,32 @@
 {% block title %}boo(kn)erds - Details{% endblock %}
 
 {% block content %}
-<!-- Page Content -->
-<div class="container">
-    <!-- /.col-lg-3 -->
-    <div class="col">
-        <div class="card">
-            {% if not book.image %}
-                <img class="card-img-top" src="https://placehold.it/900x400" alt="Placeholder">
-            {% else %}
-                <img class="img-fluid rounded mx-auto d-block" src="{{ book.image.url }}" alt="{{ book.title }}" width="200px" height="320px">
-            {% endif %}
-            <div class="card-body">
-                <h3 class="card-title">{{ book.title }}</h3>
-                <h4>${{ book.sale_price }}</h4>
-                <p class="card-text">By: {{ book.author }}</p>
-            </div>
-            <a href="{{ book.add_to_cart_url }}" class="btn btn-success">Add to Cart</a>
-        </div>
-        <!-- /.card -->
-        {% if book.summary %}
-        <div class="card card-outline-secondary my-4">
-            <div class="card-header">
-                Summary
-            </div>
-            <div class="card-body">
-                {{ book.summary }}
-            </div>
-        </div>
-        {% endif %}
-    <!-- /.card -->
+<div class="row p-1">
+  <div class="col">
+    <div class="card">
+      <!-- This is in case there isn't an image uploaded for a Book. -->
+      {% if not book.image %}
+        <img class="card-img-top" src="https://placehold.it/900x400" alt="Placeholder">
+      {% else %}
+        <img class="img-fluid rounded mx-auto d-block" src="{{ book.image.url }}" alt="{{ book.title }}" width="200px" height="320px">
+      {% endif %}
+      <div class="card-body">
+        <h3 class="card-title">{{ book.title }}</h3>
+        <h4>${{ book.sale_price }}</h4>
+        <p class="card-text">By: {{ book.author }}</p>
+      </div>
+      <a href="{{ book.add_to_cart_url }}" class="btn btn-primary">Add to Cart</a>
     </div>
+    {% if book.summary %}
+    <div class="card card-outline-secondary my-4">
+      <div class="card-header">
+        Summary
+      </div>
+      <div class="card-body">
+        {{ book.summary }}
+      </div>
+    </div>
+    {% endif %}
+  </div>
 </div>
-<!-- /.container -->
 {% endblock %}

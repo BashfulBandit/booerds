@@ -16,9 +16,13 @@
     {% if profile.is_customer %}
     <p>Date of Birth: {{ profile.date_of_birth }}</p>
     <p>Profile Type: Customer</p>
+    <a href="#" class="btn btn-primary">Edit Profile</a>
     <!-- TODO Print out all of the Customer Orders -->
     {% else %}
     <p>Profile Type: Vendor</p>
+    <a href="#" class="btn btn-primary">Edit Profile</a>
+    <a href="#" class="btn btn-primary">Add Book</a>
+    <a href="#" class="btn btn-primary">Edit Book</a>
     <!-- TODO Print out all of the Vendor Books -->
     {% endif %}
     {% endif %}
