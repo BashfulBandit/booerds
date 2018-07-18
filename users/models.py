@@ -23,6 +23,8 @@ class Customer(models.Model):
     is_customer = models.BooleanField(default=True)
     is_vendor = models.BooleanField(default=False)
 
+    subscribed = models.BooleanField(default=True)
+
     date_of_birth = models.DateField(blank=False)
 
     def __str__(self):

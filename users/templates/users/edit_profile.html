@@ -1,0 +1,21 @@
+<!-- templates/users/edit_profile.html -->
+{% extends 'bookstore/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}boo(kn)erds - Edit Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-around">
+  <div class="col-4">
+    <h2>Edit Profile</h2>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+      {{ form|crispy }}
+      </br>
+      <button type="submit" class="btn btn-primary p-1">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

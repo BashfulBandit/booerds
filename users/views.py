@@ -34,6 +34,8 @@ from .forms import (
 	MyUserCreationForm,
 	CustomerCreationForm,
 	VendorCreationForm,
+	CustomerChangeForm,
+	VendorChangeForm,
 )
 
 def user_login(request):
@@ -72,7 +74,7 @@ def profile(request, id):
 
 	if not request.user.is_authenticated:
 		return redirect('bookstore:home')
-	if str(request.user.id) == id:
+	elif str(request.user.id) == id:
 		user = get_object_or_404(User, id=id)
 		profile = None
 		if hasattr(user, 'customer'):
@@ -84,15 +86,46 @@ def profile(request, id):
 			'profile': profile,
 		})
 		return render(request, template_name, context)
-	# TODO Need to come up with a place to send the user when they request a profile
-	# page that isn't their own.
-	return render(request, template_name, context)
+	return redirect('bookstore:home')
 
+def edit_profile(request, id):
+	template_name = 'users/edit_profile.html'
+	context = {}
+
+	if not request.user.is_authenticated:
+		return redirect('users:user_login')
+
+
+	if hasattr(request.user, 'customer'):
+		form = CustomerChangeForm()
+	elif hasattr(request.user, 'vendor'):
+		form = VendorChangeForm()
+
+	context.update({
+		'form': form,
+	})
+
+	return render(request, template_name, context)
 
 def account_activation_sent(request):
 	template_name = 'users/account_activation_sent.html'
 	context = {}
 	return render(request, template_name, context)
+
+def unsubscribe(request):
+	template_name = ''
+	context = {}
+
+	if not request.user.is_authenticated:
+		return redirect('users:user_login')
+	else:
+		customer = Customer.objects.get(user=request.user)
+		if customer.subscribed:
+			customer.subscribed = False
+		else:
+			customer.subscribed = True
+		customer.save()
+	return redirect('users:profile', id=request.user.id)
 
 def activate(request, uidb64, token):
 	template_name = 'users/account_activation_invalid.html'

@@ -47,3 +47,23 @@ class VendorCreationForm(ModelForm):
             'city',
             'state',
         ]
+
+class CustomerChangeForm(ModelForm):
+    class Meta:
+        model = Customer
+        fields = [
+            'street_address',
+            'zipcode',
+            'city',
+            'state',
+        ]
+
+class VendorChangeForm(ModelForm):
+    class Meta:
+        model = Vendor
+        fields = [
+            'street_address',
+            'zipcode',
+            'city',
+            'state',
+        ]
