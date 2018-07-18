@@ -21,3 +21,6 @@ class Book(models.Model):
 
     def add_to_cart_url(self):
         return reverse('cart:add_to_cart', kwargs={'id': self.id})
+
+    def delete_from_cart_url(self):
+        return reverse('cart:delete_from_cart', kwargs={'id': self.id})

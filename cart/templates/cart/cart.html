@@ -21,13 +21,22 @@
       </tr>
     </thead>
     <tbody>
-      {% for book in cart %}
+        {% for book in cart %}
         <tr>
-          <td>{{ book.title }}</td>
-          <td>1</td>
-          <td>{{ book.sale_price }}</td>
+            <td>
+                <div class="row">
+                    <div class="col">
+                        {{ book.title }}
+                    </div>
+                    <div class="col text-right">
+                        <a class="btn btn-primary m-1" href="{{ book.delete_from_cart_url }}" role="button">Delete &raquo;</a>
+                    </div>
+                </div>
+            </td>
+            <td>1</td>
+            <td>{{ book.sale_price }}</td>
         </tr>
-      {% endfor %}
+        {% endfor %}
     </tbody>
   </table>
 </div>

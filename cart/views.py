@@ -1,5 +1,6 @@
 from django.shortcuts import (
     render,
+    redirect,
     get_object_or_404,
 )
 
@@ -33,3 +34,18 @@ def show_cart(request):
     })
 
     return render(request, template_name, context)
+
+def delete_from_cart(request, id):
+    item_list = request.session.get('key_list', [])
+
+    for i in range(0, len(item_list)):
+        if id == item_list[i]:
+            del item_list[i]
+            break
+
+    request.session['key_list'] = item_list
+    request.session.modified = True
+
+    return redirect('cart:show_cart')
+
+# def checkout(request):
