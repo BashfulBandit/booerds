@@ -23,5 +23,4 @@ class Book(models.Model):
     def add_to_cart_url(self):
         
         return reverse('cart:cart', kwargs={'id': self.id})
-    
-    
+

@@ -17,10 +17,14 @@
   <!-- Now we dynamically show the book objects in our cart page-->
   {% for book in cart %}
   <div class="row">
-    <div class="col-4">{{book.title}}</div>
+    <div class="col-4">{{book.title}}
+      <p><a class="btn btn-secondary" href="{{book.delete_from_cart}}" role="button">delete &raquo;</a></p>
+      <img class="card-img-top" src="{{ book.image.url }}" alt="" width="200px" height="320px">
+    </div>
     <div class="col-4">{{book.sale_price}}</div>
     <div class="col-4">1</div>
   </div>
+    <br/> 
   {% endfor %}
 
 {% load static %}
