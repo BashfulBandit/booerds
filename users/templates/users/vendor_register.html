@@ -6,22 +6,21 @@
 {% block title %}boo(kn)erds - Vendor Register{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-4">
-      <h2>Vendor Registration</h2>
-  </div>
-</div>
-<div class="row justify-content-center">
-  <div class="col-4">
-    <form method="post">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ next }}">
-      {{ user_form|crispy }}
-      {{ form|crispy }}
-      </br>
-      <button type="submit" class="btn btn-primary p-1">Register</button>
-      <a href="{% url 'users:user_login' %}" class="btn btn-primary p-1">Already Registered?</a>
-    </form>
-  </div>
-</div>
+<form method="post" class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col text-center">
+            <h3>Vendor Registration</h3>
+        </div>
+    </div>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col">
+            {{ user_form|crispy }}
+        </div>
+        <div class="col">
+            {{ vendor_form|crispy }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-1 btn-lg btn-block">Register</button>
+</form>
 {% endblock %}
