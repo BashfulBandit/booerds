@@ -14,7 +14,7 @@ def list(request):
     category = ''
     text = ''
 
- 
+
     #Extract information from the request object.
     if request.method == 'GET' and 'search_text' in request.GET:
         text = request.GET['search_text']
@@ -38,6 +38,16 @@ def list(request):
         'books': books,
     })
     # Render the response.
+    return render(request, template_name, context)
+
+def add_book_to_vendor(request, id):
+    template_name = 'book/add_book.html'
+    context = {}
+
+    # First check if user is logged in and user is a vendor.
+    # If user is not logged in then redirect to login page.
+    # If user is not a vendor, then redirect to Vendor registration page.
+
     return render(request, template_name, context)
 
 def details(request, id):
