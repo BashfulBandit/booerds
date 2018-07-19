@@ -14,9 +14,15 @@ from .models import (
 
 # Create your forms here.
 class MyUserCreationForm(UserCreationForm):
-	first_name = forms.CharField(required=True)
-	last_name = forms.CharField(required=True)
-	email = forms.CharField(required=True)
+	first_name = forms.CharField(
+        required=True
+    )
+	last_name = forms.CharField(
+        required=True
+    )
+	email = forms.CharField(
+        required=True
+    )
 
 	class Meta(UserCreationForm.Meta):
 		model = User
@@ -33,9 +39,10 @@ class CustomerCreationForm(ModelForm):
         fields = [
             'date_of_birth',
             'street_address',
-            'zipcode',
             'city',
             'state',
+            'zipcode',
+            'avatar',
         ]
 
 class VendorCreationForm(ModelForm):
@@ -43,9 +50,10 @@ class VendorCreationForm(ModelForm):
         model = Vendor
         fields = [
             'street_address',
-            'zipcode',
             'city',
             'state',
+            'zipcode',
+            'avatar',
         ]
 
 class CustomerChangeForm(ModelForm):
@@ -53,9 +61,10 @@ class CustomerChangeForm(ModelForm):
         model = Customer
         fields = [
             'street_address',
-            'zipcode',
             'city',
             'state',
+            'zipcode',
+            'avatar',
         ]
 
 class VendorChangeForm(ModelForm):
@@ -63,7 +72,8 @@ class VendorChangeForm(ModelForm):
         model = Vendor
         fields = [
             'street_address',
-            'zipcode',
             'city',
             'state',
+            'zipcode',
+            'avatar',
         ]

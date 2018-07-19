@@ -1,37 +1,98 @@
 {% extends 'bookstore/base.html' %}
 
+{% load static %}
+
 {% block title %}boo(kn)erds - {{ user.first_name }}{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
+<!-- Profile Informatin -->
+<div class="row justify-content-center p-1">
   <div class="col-6">
-    <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-    <p>Username: {{ user.username }}</p>
-    <p>Email: {{ user.email }}</p>
-    {% if profile is not None %}
-    <p>Street Address: {{ profile.street_address  }}</p>
-    <p>Zipcode: {{ profile.zipcode }}</p>
-    <p>City: {{ profile.city }}</p>
-    <p>State: {{ profile.state }}</p>
-    {% if profile.is_customer %}
-    <p>{{ profile.subscribed }}</p>
-    <p>Date of Birth: {{ profile.date_of_birth }}</p>
-    <p>Profile Type: Customer</p>
-    <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
-    {% if profile.subscribed %}
-      <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Unsubscribe</a>
-    {% else %}
-      <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Subscribe</a>
-    {% endif %}
-    <!-- TODO Print out all of the Customer Orders -->
-    {% else %}
-    <p>Profile Type: Vendor</p>
-    <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
-    <a href="#" class="btn btn-primary">Add Book</a>
-    <a href="#" class="btn btn-primary">Edit Book</a>
-    <!-- TODO Print out all of the Vendor Books -->
-    {% endif %}
-    {% endif %}
+    <div class="card">
+      {% if not profile.avatar %}
+        <img class="img-fluid rounded-circle mx-auto" src="{% static 'users/img/user.png' %}" alt="Placeholder" width="200px" height="320px">
+      {% else %}
+        <img class="img-thumbnail rounded-circle mx-auto" src="{{ profile.avatar.url }}" alt="{{ user.username }}" width="200px" height="320px">
+      {% endif %}
+      <div class="card-body text-center">
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        <h3>{{ user.username }}</h3>
+        {% if profile is not None %}
+          <p>{{ profile.street_address }} {{ profile.city }} {{ profile.state }} {{ profile.zipcode }}</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
+{% if profile is not None %}
+  <!-- Buttons -->
+  <div class="row justify-content-center p-1">
+    <div class="col text-center">
+      {% if profile.is_customer %}
+        <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
+        {% if profile.subscribed %}
+          <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Unsubscribe</a>
+        {% else %}
+          <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Subscribe</a>
+        {% endif %}
+      {% elif profile.is_vendor %}
+        <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
+        <a href="{% url 'book:add_book' request.user.id %}" class="btn btn-primary">Add Book</a>
+      {% endif %}
+    </div>
+  </div>
+  <!-- TODO Will need to come back and add Orders for Customers once Orders are implemented. -->
+  <!-- Orders or Books -->
+  <div class="row table-responsive p-1">
+    <div class="col">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            {% if profile.is_customer %}
+              <th scope="col">Order</th>
+              <th scope="col">Order ID</th>
+              <th scope="col">Total</th>
+            {% elif profile.is_vendor %}
+              <th scope="col">Book</th>
+              <th scope="col">Author</th>
+              <th scope="col">Price</th>
+              <th scope="col">Vendor Price</th>
+              <th scope="col">Modify?</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% if profile.is_customer %}
+            {% for order in orders %}
+              <tr>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+              </tr>
+            {% endfor %}
+          {% elif profile.is_vendor %}
+            {% for book in books %}
+              <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.sale_price }}</td>
+                <td>{{ book.vendor_price }}</td>
+                <td>
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'book:edit_book' book.id %}" class="btn btn-primary">Edit Book</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'book:delete_book' book.id %}" class="btn btn-primary">Delete Book</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endif %}
 {% endblock %}

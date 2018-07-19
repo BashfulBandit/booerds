@@ -25,6 +25,7 @@ from django.contrib.auth import (
 from django.contrib.auth.forms import AuthenticationForm
 
 # Importing our models and forms.
+from book.models import Book
 from .tokens import account_activation_token
 from .models import (
 	Customer,
@@ -102,15 +103,20 @@ def profile(request, id):
 		user = get_object_or_404(User, id=id)
         # Get the user profile.
 		profile = None
+		books = None
+		orders = None
 		if hasattr(user, 'customer'):
 			profile = user.customer
+			# TODO Get all the Orders froma Customer.
 		elif hasattr(user, 'vendor'):
 			profile = user.vendor
-        # TODO We will need to get Orders for Customers and Books for Vendors to display.
+			books = Book.objects.all().filter(vendor=request.user.vendor)
         # Put the data in the context dict.
 		context.update({
 			'user': user,
 			'profile': profile,
+			'books': books,
+			'orders': orders,
 		})
         # Render the template with the context dict.
 		return render(request, template_name, context)
@@ -131,9 +137,17 @@ def edit_profile(request, id):
 	elif request.method == 'POST':
         # Check to figure out if user is customer or vendor and get their profile form.
 		if hasattr(request.user, 'customer'):
-			form = CustomerChangeForm(request.POST, instance=request.user.customer)
+			form = CustomerChangeForm(
+				request.POST,
+				request.FILES,
+				instance=request.user.customer,
+			)
 		elif hasattr(request.user, 'vendor'):
-			form = VendorChangeForm(request.POST, instance=request.user.vendor)
+			form = VendorChangeForm(
+				request.POST,
+				request.FILES,
+				instance=request.user.vendor,
+			)
 
         # Check if the form is valid.
 		if form.is_valid():
@@ -153,9 +167,13 @@ def edit_profile(request, id):
 	else:
         # Check to figure out if user is customer or vendor.
 		if hasattr(request.user, 'customer'):
-			form = CustomerChangeForm(instance=request.user.customer)
+			form = CustomerChangeForm(
+				instance=request.user.customer,
+			)
 		elif hasattr(request.user, 'vendor'):
-			form = VendorChangeForm(instance=request.user.vendor)
+			form = VendorChangeForm(
+				instance=request.user.vendor,
+			)
 
         # Put form in context dict.
 		context.update({
@@ -229,15 +247,18 @@ def customer_register(request):
 	elif request.method == 'POST':
         # Get the forms from the request.
 		user_form = MyUserCreationForm(request.POST)
-		customer_form = CustomerCreationForm(request.POST)
+		customer_form = CustomerCreationForm(request.POST, request.FILES)
 
         # Make sure the forms are valid.
 		if user_form.is_valid() and customer_form.is_valid():
             # Make a user from the user_form.
 			user = user_form.save()
+			customer = customer_form.save()
             # Set user.is_active to False.
 			user.is_active = False
+			customer.user = user
 			user.save()
+			customer.save()
             # Gather information to email the user.
 			current_site = get_current_site(request)
 			subject = 'Activate Your boo(kn)erds Account'
@@ -249,21 +270,7 @@ def customer_register(request):
 			})
             # Email the user.
 			user.email_user(subject, message)
-            # Get the data from the customer_form.
-			street_address = customer_form.cleaned_data['street_address']
-			zipcode = customer_form.cleaned_data['zipcode']
-			city = customer_form.cleaned_data['city']
-			state = customer_form.cleaned_data['state']
-			date_of_birth = customer_form.cleaned_data['date_of_birth']
-            # Make the Customer and set it's user to current user.
-			customer = Customer.objects.create(
-				user=user,
-				street_address=street_address,
-				zipcode=zipcode,
-				city=city,
-				state=state,
-				date_of_birth=date_of_birth,
-			)
+			customer_form.save()
             # Redirect to account_activation_sent.
 			return redirect('users:account_activation_sent')
         # If form data isn't valid, then get the forms to send back to user.
@@ -299,15 +306,18 @@ def vendor_register(request):
 	elif request.method == 'POST':
         # Get the forms from the request.
 		user_form = MyUserCreationForm(request.POST)
-		vendor_form = VendorCreationForm(request.POST)
+		vendor_form = VendorCreationForm(request.POST, request.FILES)
 
         # Check if valid, if not return the form to the user to fix.
 		if user_form.is_valid() and vendor_form.is_valid():
             # Save the user_form
 			user = user_form.save()
+			vendor = vendor_form.save()
             # Set user.is_active to False, so we can e-mail verify.
 			user.is_active = False
+			vendor.user = user
 			user.save()
+			vendor.save()
             # Gather information to email to the user.
 			current_site = get_current_site(request)
 			subject = 'Activate Your boo(kn)erds Account'
@@ -319,19 +329,6 @@ def vendor_register(request):
 			})
             # Email the user.
 			user.email_user(subject, message)
-            # Get the vendor_form data.
-			street_address = vendor_form.cleaned_data['street_address']
-			zipcode = vendor_form.cleaned_data['zipcode']
-			city = vendor_form.cleaned_data['city']
-			state = vendor_form.cleaned_data['state']
-            # Create the Vendor object and set it's user to the user just made.
-			vendor = Vendor.objects.create(
-				user=user,
-				street_address=street_address,
-				zipcode=zipcode,
-				city=city,
-				state=state,
-			)
             # Redirect to account_activation_sent
 			return redirect('users:account_activation_sent')
         # Invalid form(s), return the forms to the user.
