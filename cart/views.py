@@ -24,13 +24,20 @@ def show_cart(request):
 
     item_list = request.session.get('key_list', [])
     book_list = []
+    
+    order_value = 0
 
     for i in range(0, len(item_list)):
-        book_list.append(get_object_or_404(Book, id=item_list[i]))
-
+        temp_book = get_object_or_404(Book, id=item_list[i])
+        order_value += temp_book.sale_price
+        book_list.append(temp_book)
+    
+    print(order_value)
+    
     # Add the book to the context dict.
     context.update({
         'cart': book_list,
+        'order_total': order_value,
     })
 
     return render(request, template_name, context)
