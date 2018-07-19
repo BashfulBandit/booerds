@@ -1,40 +1,26 @@
 <!-- templates/bookstore/base.html -->
 <!DOCTYPE html>
 <html>
-	<!-- Head -->
 	<head>
-
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="boo(kn)erds - E-commerce Book Store for UGA CSCI-4050 - Software Engineering">
 		<meta name="author" content="Jonathan Templeton, Eric Older, Revati Khatri, Mayank Verma, Ankita Joshi, Niraj Kadam">
 		<title>{% block title %}{% endblock %}</title>
-
 		<!-- Pull in the rest of head tag -->
 		{% include 'bookstore/head.html' %}
-
 	</head>
-	<!-- End Head -->
-	<!-- Body -->
 	<body>
-
 		<!-- Pull in base navbar tag. -->
 		{% include 'bookstore/navbar.html' %}
-
 		<div class="container-fluid shadow-lg p-3 mb-5 bg-white rounded">
-
 			<!-- Define block 'content' -->
 			{% block content %}
 			{% endblock %}
-
 		</div>
-
 		<!-- Pull in base footer tag. -->
 		{% include 'bookstore/footer.html' %}
-
 		<!-- Pull in base JS scripts. -->
 		{% include 'bookstore/scripts.html' %}
-
 	</body>
-	<!-- End Body -->
 </html>

@@ -1,31 +1,24 @@
 <!-- templates/cart/pre_cart.html -->
 {% extends 'bookstore/base.html' %}
-
 {% load static %}
-
 {% block title %}boo(kn)erds - Add to Cart{% endblock %}
 
 {% block content %}
-
 <div class="row justify-content-center">
-  <div class="col p-1 text-center">
-    <img class="" src="{% static 'cart/img/home.jpeg' %}" alt="Home" width="100" height="100">
-    <h2>Home</h2>
-    <a class="btn btn-primary" href="{% url 'bookstore:home' %}" role="button">Click Here! &raquo;</a>
-  </div>
-  <!-- /.col -->
-  <div class="col p-1 text-center">
-    <img class="" src="{% static 'cart/img/cart.png' %}" alt="Cart" width="100" height="100">
-    <h2>View Cart</h2>
-    <a class="btn btn-primary" href="{% url 'cart:show_cart' %}" role="button">Click Here! &raquo;</a>
-  </div>
-  <!-- /.col -->
-  <div class="col p-1 text-center">
-    <img class="" src="{% static 'cart/img/checkout.jpg' %}" alt="Checkout" width="100" height="100">
-    <h2>Checkout</h2>
-    <a class="btn btn-primary" href="http://localhost:8000/cart/checkout" role="button">Click Here! &raquo;</a>
-  </div>
-  <!-- /.col -->
+	<div class="col p-1 text-center">
+		<img class="" src="{% static 'cart/img/home.jpeg' %}" alt="Home" width="100" height="100">
+		<h2>Home</h2>
+		<a class="btn btn-primary" href="{% url 'bookstore:home' %}" role="button">Click Here! &raquo;</a>
+	</div>
+	<div class="col p-1 text-center">
+		<img class="" src="{% static 'cart/img/cart.png' %}" alt="Cart" width="100" height="100">
+		<h2>View Cart</h2>
+		<a class="btn btn-primary" href="{% url 'cart:show_cart' %}" role="button">Click Here! &raquo;</a>
+	</div>
+	<div class="col p-1 text-center">
+		<img class="" src="{% static 'cart/img/checkout.jpg' %}" alt="Checkout" width="100" height="100">
+		<h2>Checkout</h2>
+		<a class="btn btn-primary" href="http://localhost:8000/cart/checkout" role="button">Click Here! &raquo;</a>
+	</div>
 </div>
-<!-- /.row -->
 {% endblock %}

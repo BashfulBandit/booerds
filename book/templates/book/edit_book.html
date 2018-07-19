@@ -1,27 +1,25 @@
 <!-- templates/book/edit_book.html -->
 {% extends 'bookstore/base.html' %}
-
 {% load crispy_forms_tags %}
-
 {% block title %}boo(kn)erds - Edit Book{% endblock %}
 
 {% block content %}
 <form method="post" enctype="multipart/form-data">
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <h3>Edit Book</h3>
-        </div>
-    </div>
-    {% csrf_token %}
-    <div class="row justify-content-center">
-        <div class="col-4">
-            {{ book_form|crispy }}
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <button type="submit" class="btn btn-primary mt-1 btn-lg btn-block">Update</button>
-        </div>
-    </div>
+	{% csrf_token %}
+	<div class="row justify-content-center">
+		<div class="col-4">
+			<h3>Edit Book</h3>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-4">
+			{{ book_form|crispy }}
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-4">
+			<button type="submit" class="btn btn-primary mt-1 btn-lg btn-block">Update</button>
+		</div>
+	</div>
 </form>
 {% endblock %}
