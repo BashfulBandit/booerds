@@ -5,25 +5,38 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="card">
-      <!-- This is in case there isn't an image uploaded for a Book. -->
-      {% if not book.image %}
-        <img class="card-img-top" src="https://placehold.it/900x400" alt="Placeholder">
-      {% else %}
-        <img class="img-fluid rounded mx-auto d-block" src="{{ book.image.url }}" alt="{{ book.title }}" width="200px" height="320px">
-      {% endif %}
-      <div class="card-body">
-        <h3 class="card-title">{{ book.title }}</h3>
-        <p class="card-text">By: {{ book.author }}</p>
-        <h4>${{ book.sale_price }}</h4>
-      </div>
-      <a href="{{ book.add_to_cart_url }}" class="btn btn-primary">Add to Cart</a>
-      <div class="card-footer">
-        {% if book.summary %}
-          <h3 class="card-title">Description</h3>
-          {{ book.summary }}
-        {% endif %}
-      </div>
-    </div>
+	<div class="col-lg-4">
+		<div class="card">
+			<div class="card-header">
+				{% if not book.image %}
+					<img class="card-img-top img-fluid" src="https://placehold.it/900x400" alt="Placeholder">
+				{% else %}
+					<img class="card-img-top img-fluid" src="{{ book.image.url }}" alt="{{ book.title }}" max-width="385px" max-height="250px">
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% if book.summary %}
+	<div class="col-lg-4">
+		<div class="card">
+			<div class="card-body">
+				<h3 class="card-title">{{ book.title }}</h3>
+				<p class="card-text">By: {{ book.author }}</p>
+				<h4>${{ book.sale_price }}</h4>
+			</div>
+			<div class="card-footer">
+				<a href="{{ book.add_to_cart_url }}" class="btn btn-primary btn-block">Add to Cart</a>
+	        </div>
+		</div>
+		<div class="card mt-1">
+			<div class="card-header">
+				<h3 class="card-title">Description</h3>
+			</div>
+			<div class="card-body">
+				<p>{{ book.summary }}</p>
+			</div>
+		</div>
+	</div>
+	{% endif %}
 </div>
 {% endblock %}

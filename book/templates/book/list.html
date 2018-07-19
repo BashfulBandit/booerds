@@ -18,27 +18,21 @@
   <div class="col-lg-9">
     <div class="row">
       {% for book in books %}
-      <div class="col-2">
-        <div class="card text-center">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
           {% if not book.image %}
             <a href="{{ book.get_absolute_url }}"><img class="card-img-top img-thumbnail" src="https://placehold.it/900x400" alt="Placeholder"></a>
           {% else %}
             <a href="{{ book.get_absolute_url }}"><img class="card-img-top img-thumbnail" src="{{ book.image.url }}" alt="{{ book.title }}"></a>
           {% endif %}
-          <div class="card-body text-center">
-            <div class="row justify-content-center">
-              <h5 class="card-title">
-                <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
-              </h5>
-            </div>
-            <div class="row justify-content-center">
-              <p class="card-text">{{ book.author }}</p>
-            </div>
-            <div class="row justify-content-center">
-              <h5>$ {{ book.sale_price }}</h5>
-            </div>
+          <div class="card-body">
+			<h4 class="card-title">
+				<a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+			</h4>
+			 <p class="card-text">{{ book.author }}</p>
+             <h5>$ {{ book.sale_price }}</h5>
           </div>
-          <div class="card-footer text-center">
+          <div class="card-footer">
             <a href="{{ book.add_to_cart_url }}" class="btn btn-primary">Add to Cart</a>
           </div>
         </div>
