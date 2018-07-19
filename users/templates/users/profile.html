@@ -20,6 +20,7 @@
         {% if profile is not None %}
           <p>{{ profile.street_address }} {{ profile.city }} {{ profile.state }} {{ profile.zipcode }}</p>
           {% if profile.is_customer %}
+            <h4>Birthday</h4>
             <p>{{ profile.date_of_birth }}</p>
           {% endif %}
         {% endif %}
