@@ -4,22 +4,20 @@
 {% block title %}boo(kn)erds - Edit Book{% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-	{% csrf_token %}
-	<div class="row justify-content-center">
-		<div class="col-4">
-			<h3>Edit Book</h3>
-		</div>
-	</div>
-	<div class="row justify-content-center">
-		<div class="col-4">
-			{{ book_form|crispy }}
-		</div>
-	</div>
-	<div class="row justify-content-center">
-		<div class="col-4">
+<div class="row justify-content-center">
+	<div class="col-lg-4">
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<h3 class="text-center">Edit Book</h3>
+			<div class="card-group">
+				<div class="card">
+					<div class="card-body">
+						{{ book_form|crispy }}
+					</div>
+				</div>
+			</div>
 			<button type="submit" class="btn btn-primary mt-1 btn-lg btn-block">Update</button>
-		</div>
+		</form>
 	</div>
-</form>
+</div>
 {% endblock %}
