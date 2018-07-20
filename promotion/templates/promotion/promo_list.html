@@ -1,0 +1,52 @@
+<!-- templates/promotion/promo_list.html -->
+{% extends 'bookstore/base.html' %}
+{% block title %}boo(kn)erds - Promotions{% endblock %}
+
+{% block content %}
+<div class="row table-responsive">
+	<div class="col">
+		<a href="{% url 'promotion:add_promo' %}" class="btn btn-primary btn-lg m-1">Add New Promotion</a>
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<th scope="col">Promotion</th>
+				<th scope="col">Promo Code</th>
+				<th scope="col">Valid From</th>
+				<th scope="col">Valid To</th>
+				<th scope="col">Discount</th>
+				<th scope="col">Details</th>
+				<th scope="col">Front Page?</th>
+				<th scope="col">Modify?</th>
+			</thead>
+			<tbody>
+				{% for promo in promos %}
+					<tr>
+						<td>{{ promo.name }}</td>
+						<td>{{ promo.promocode }}</td>
+						<td>{{ promo.valid_from }}</td>
+						<td>{{ promo.valid_to }}</td>
+						<td>{{ promo.discount }}</td>
+						<td>{{ promo.details }}</td>
+						<td>
+							{% if promo.frontpage %}
+								Yes
+							{% else %}
+								No
+							{% endif%}
+						</td>
+						<td>
+							<div class="row">
+								<div class="col">
+									<a href="{% url 'promotion:edit_promo' promo.id %}" class="btn btn-primary btn-lg btn-block m-1">Edit Promotion</a>
+								</div>
+								<div class="col">
+									<a href="{% url 'promotion:delete_promo' promo.id %}" class="btn btn-primary btn-lg btn-block m-1">Delete Promotion</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

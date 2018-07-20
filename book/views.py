@@ -76,43 +76,54 @@ def edit_book(request, book_id):
         return render(request, template_name, context)
 
 def add_book(request, vendor_id):
-    # Define the template and an empty context dict.
-    template_name = 'book/add_book.html'
-    context = {}
+	# Define the template and an empty context dict.
+	template_name = 'book/add_book.html'
+	context = {}
 
-    # Check whether the user is logged in and also a Vendor.
-    if not request.user.is_authenticated or not hasattr(request.user, 'vendor'):
-        return redirect('bookstore:home')
-    # User is logged in and is a Vendor, so check if request is a POST.
-    elif request.method == 'POST':
-        # Get the form from the request.
-        book_form = BookCreationForm(
-            request.POST,
-            request.FILES
-        )
-        # Check if the form is valid.
-        if book_form.is_valid():
-            book = book_form.save()
-            book.vendor = request.user.vendor
-            book.save()
-            # Redirect Vendor to profile page.
-            return redirect('users:profile', id=request.user.id)
-        # Form is not valid. Return it to user with errors.
-        else:
-            context.update({
-                'book_form': book_form,
-            })
-            return render(request, template_name, context)
-    # GET request.
-    else:
-        # Initialize an empty Book form.
-        book_form = BookCreationForm()
-        # Put form in context dict.
-        context.update({
-            'book_form': book_form,
-        })
-        # Render template with the contect dict.
-        return render(request, template_name, context)
+	# Check whether the user is logged in and also a Vendor.
+	if not request.user.is_authenticated or not hasattr(request.user, 'vendor'):
+		return redirect('bookstore:home')
+	# User is logged in and is a Vendor, so check if request is a POST.
+	elif request.method == 'POST':
+		# Get the form from the request.
+		book_form = BookCreationForm(
+			request.POST,
+			request.FILES,
+		)
+		# Check if the form is valid.
+		if book_form.is_valid():
+			# Get the ISBN of the book trying to be added.
+			ISBN = book_form.cleaned_data['ISBN']
+			# Check to see if the Vendor already has this Book in the DB.
+			book_count = Book.objects.all().filter(
+				vendor=request.user.vendor
+			).filter(
+				ISBN=ISBN
+			).count()
+			if book_count > 0:
+				return redirect('users:profile', id=request.user.id)
+			else:
+				book = book_form.save()
+				book.vendor = request.user.vendor
+				book.save()
+				# Redirect Vendor to profile page.
+				return redirect('users:profile', id=request.user.id)
+		# Form is not valid. Return it to user with errors.
+		else:
+			context.update({
+			'book_form': book_form,
+			})
+			return render(request, template_name, context)
+	# GET request.
+	else:
+		# Initialize an empty Book form.
+		book_form = BookCreationForm()
+		# Put form in context dict.
+		context.update({
+		'book_form': book_form,
+		})
+		# Render template with the contect dict.
+		return render(request, template_name, context)
 
 # Create your views here.
 def list(request):

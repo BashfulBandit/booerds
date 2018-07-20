@@ -24,7 +24,8 @@ from django.urls import (
 urlpatterns = [
     re_path('^admin/', admin.site.urls),
     re_path('^u/', include(('users.urls', 'users'), namespace='users')),
-    re_path('^book/', include(('book.urls', 'book'), namespace='book')),
+    re_path('^books/', include(('book.urls', 'book'), namespace='book')),
     re_path('^cart/', include(('cart.urls', 'cart'), namespace='cart')),
+	re_path('^promotions/', include(('promotion.urls', 'promotion'), namespace='promotion')),
     re_path('^', include(('bookstore.urls', 'bookstore'), namespace='bookstore')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

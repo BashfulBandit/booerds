@@ -1,14 +1,24 @@
 <!-- templates/bookstore/home.html -->
 {% extends 'bookstore/base.html' %}
+{% load static %}
 {% block title %}boo(kn)erds{% endblock %}
 
 {% block content %}
-<!-- TODO Make this generate content from a Promotion -->
+{% if promo is not None %}
 <header class="jumbotron my-4">
-	<h1 class="display-3">A Warm Welcome!</h1>
-	<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-	<a href="#" class="btn btn-primary btn-lg">Call to action!</a>
+	<div class="row">
+		<div class="col">
+			<h1 class="display-3 text-capitalize">{{ promo.name }}</h1>
+			<p class="lead">{{ promo.details }}</p>
+			<p class="lead">Enter <b><strong><em class="bg-primary rounded p-1 text-white">{{ promo.promocode }}</em></strong></b> at Checkout!</p>
+			<p class="lead">Valid {{ promo.valid_from }} - {{ promo.valid_to }}</p>
+		</div>
+		<div class="col align-self-center">
+			<img class="img-fluid" src="{% static 'bookstore/img/sale.png' %}" alt="Sale">
+		</div>
+	</div>
 </header>
+{% endif %}
 <div class="row text-center">
 	{% for book in featured_books %}
 		<div class="col-lg-3 col-md-6 mb-4">

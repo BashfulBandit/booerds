@@ -1,0 +1,53 @@
+<!-- templates/promotion/site_books.html -->
+{% extends 'bookstore/base.html' %}
+{% block title %}boo(kn)erds - Site Books{% endblock %}
+
+{% block content %}
+<div class="row table-responsive">
+	<div class="col">
+		<table class="table table-bordered text-center">
+			<thead class="thead-dark">
+				<th scope="col">Title</th>
+				<th scope="col">Author</th>
+				<th scope="col">ISBN</th>
+				<th scope="col">Subject</th>
+				<th scope="col">Sale Price</th>
+				<th scope="col">Vendor Price</th>
+				<th scope="col">Featured?</th>
+				<th scope="col">Vendor Username</th>
+			</thead>
+			<tbody>
+				{% for book in books %}
+					<tr>
+						<td>{{ book.title }}</td>
+						<td>{{ book.author }}</td>
+						<td>{{ book.ISBN }}</td>
+						<td>{{ book.subject }}</td>
+						<td>{{ book.sale_price }}</td>
+						<td>{{ book.vendor_price }}</td>
+						<td>
+							<div class="row">
+								<div class="col">
+									{% if book.featured %}
+										Yes
+									{% else %}
+										No
+									{% endif %}
+								</div>
+								<div class="col">
+									{% if book.featured %}
+										<a href="{% url 'promotion:feature_book' book.id %}" class="btn btn-primary">Unfeature</a>
+									{% else %}
+										<a href="{% url 'promotion:feature_book' book.id %}" class="btn btn-primary">Feature</a>
+									{% endif %}
+								</div>
+							</div>
+						</td>
+						<td>{{ book.vendor.user.username }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
