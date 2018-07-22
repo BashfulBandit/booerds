@@ -57,11 +57,19 @@ def user_login(request):
 			username = form.cleaned_data['username']
 			raw_password = form.cleaned_data['password']
             # authenticate the user.
-			user = authenticate(request, username=username, password=raw_password)
-            # Log the user in.
+			user = authenticate(
+				request,
+				username=username,
+				password=raw_password
+			)
 			if user is not None:
+				# Log the user in.
 				login(request, user)
-				return redirect('users:profile', id=user.id)
+				# Send them to the page based on the URL.
+				if 'next' in request.GET:
+					return redirect(request.GET['next'])
+				else:
+					return redirect('users:profile', id=user.id)
         # If the form isn't valid then send them the form back with errors.
 		else:
 			context.update({
