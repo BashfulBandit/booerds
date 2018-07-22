@@ -9,4 +9,5 @@ urlpatterns = [
 	re_path('^edit/(?P<promo_id>(\d+))/$', views.edit_promo, name='edit_promo'),
 	re_path('^books/$', views.books, name='books'),
 	re_path('^books/feature_book/(?P<book_id>(\d+))/$', views.feature_book, name='feature_book'),
+    re_path('^email/$', views.send_subscribers_email, name='send_subscribers_email'),
 ]
