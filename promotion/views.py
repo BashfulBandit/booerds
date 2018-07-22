@@ -3,12 +3,67 @@ from django.shortcuts import (
 	redirect,
 	get_object_or_404,
 )
+from django.core.mail import send_mail
 
-from .forms import PromotionCreationForm
+from .forms import (
+	PromotionCreationForm,
+	EmailForm,
+)
 from .models import Promotion
 from book.models import Book
+from users.models import Customer
 
 # Create your views here.
+def send_subscribers_email(request):
+	template_name = 'promotion/send_email.html'
+	context = {}
+
+	print('test')
+	# Check if user is logged in and is a staff member.
+	if not request.user.is_authenticated or not request.user.is_staff:
+		return redirect('bookstore:home')
+	# POST request.
+	elif request.method == 'POST':
+		print('POST')
+		# Get the form from the request.
+		email_form = EmailForm(
+			request.POST,
+		)
+		# Check if the form is valid.
+		if email_form.is_valid():
+			# Get data from form.
+			subject = email_form.cleaned_data['subject']
+			message = email_form.cleaned_data['message']
+			# Get all the subscribed customers.
+			subscribed_customers = Customer.objects.all().filter(
+				subscribed=True,
+			)
+			# Send the email to everyone.
+			for customer in subscribed_customers:
+				customer.user.email_user(subject, message)
+			# Redirect back to promo_list.
+			return redirect('promotion:promo_list')
+		# Form is not valid.
+		else:
+			print('Not valid!')
+			# Put form back in context dict.
+			context.update({
+				'email_form': email_form,
+			})
+			# Render template with context and form with errors.
+			return render(request, template_name, context)
+	# GET request.
+	else:
+		print('GET')
+		# Create an EmailForm
+		email_form = EmailForm()
+		# Put the form in the context dict.
+		context.update({
+			'email_form': email_form,
+		})
+		# Render the template with the context.
+		return render(request, template_name, context)
+
 def feature_book(request, book_id):
     # Define the template and an empty context dict.
 	template_name = ''
