@@ -55,4 +55,35 @@ def delete_from_cart(request, id):
 
     return redirect('cart:show_cart')
 
-# def checkout(request):
+def checkout(request):
+    
+    template_name = 'cart/checkout.html'
+    context = {}
+    
+    item_list = request.session.get('key_list', [])
+    
+    book_count = len(item_list)
+        
+    book_list = []
+    
+    order_value = 0
+
+    for i in range(0, len(item_list)):
+        temp_book = get_object_or_404(Book, id=item_list[i])
+        order_value += temp_book.sale_price
+        book_list.append(temp_book)
+    
+    User_Name = request.user.id
+    
+    context.update({
+        'cart': book_list,
+        'order_total': order_value,
+        'User_Name': User_Name,
+        'Book_Count': book_count,
+    })
+    
+    return render(request, template_name, context)
+
+
+
+

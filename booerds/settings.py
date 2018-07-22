@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'book.apps.BookConfig',
 	'users.apps.UsersConfig',
     'cart.apps.CartConfig',
+    'order.apps.OrderConfig',
 	'promotion.apps.PromotionConfig',
 ]
 
