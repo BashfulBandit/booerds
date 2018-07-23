@@ -32,23 +32,21 @@
 					</div>
 				</td>
 				<td>1</td>
-				<td>{{ book.sale_price }}</td>
+				<td>$ {{ book.sale_price }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 </div>
-<div class="row justify-content-center">
-	<div class="col-lg-auto text-center">
+<div class="row justify-content-end">
+	<div class="col-lg-auto text-right">
 		<h2>Order Total</h2>
-		<div>{{order_total}}</div>
+		<div><strong>$ {{ order_total }}</strong></div>
 	</div>
 </div>
-<br/>
-<div class="row justify-content-center">
-	<div class="col-lg-auto text-center">
-		<h3>Proceed to Checkout</h3>
-		<a class="btn btn-primary" href="{% url 'cart:checkout' %}">Click Here! &raquo;</a>
+<div class="row justify-content-end">
+	<div class="col-lg-auto text-right">
+		<a href="{% url 'cart:payment_options' %}" class="btn btn-primary mt-1 btn-lg btn-block">Checkout</a>
 	</div>
 </div>
 {% endblock %}

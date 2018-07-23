@@ -4,7 +4,6 @@ from django.urls import reverse
 from users.models import Vendor
 
 # Create your models here.
-
 class Book(models.Model):
     title = models.CharField(
         max_length=255,

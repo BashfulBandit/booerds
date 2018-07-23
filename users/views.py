@@ -26,6 +26,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 # Importing our models and forms.
 from book.models import Book
+from order.models import Order
 from .tokens import account_activation_token
 from .models import (
 	Customer,
@@ -115,7 +116,7 @@ def profile(request, id):
 		orders = None
 		if hasattr(user, 'customer'):
 			profile = user.customer
-			# TODO Get all the Orders froma Customer.
+			orders = Order.objects.all().filter(customer=request.user.customer)
 		elif hasattr(user, 'vendor'):
 			profile = user.vendor
 			books = Book.objects.all().filter(vendor=request.user.vendor)

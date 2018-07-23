@@ -45,7 +45,6 @@
       {% endif %}
     </div>
   </div>
-  <!-- TODO Will need to come back and add Orders for Customers once Orders are implemented. -->
   <!-- Orders or Books -->
   <div class="row table-responsive p-1">
     <div class="col">
@@ -53,9 +52,10 @@
         <thead class="thead-dark">
           <tr>
             {% if profile.is_customer %}
-              <th scope="col">Order</th>
+              <th scope="col">Date</th>
               <th scope="col">Order ID</th>
               <th scope="col">Total</th>
+              <th scope="col">Details?</th>
             {% elif profile.is_vendor %}
               <th scope="col">Book</th>
               <th scope="col">Author</th>
@@ -69,9 +69,16 @@
           {% if profile.is_customer %}
             {% for order in orders %}
               <tr>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>N/A</td>
+                <td>{{ order.order_date }}</td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.total }}</td>
+                <td>
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'order:order_details' order.id %}" class="btn btn-primary btn-lg btn-block m-1">Details</a>
+                    </div>
+                  </div>
+                </td>
               </tr>
             {% endfor %}
           {% elif profile.is_vendor %}

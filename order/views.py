@@ -3,36 +3,67 @@ from django.shortcuts import (
     get_object_or_404,
 )
 
-from .models import Order
-
+from .models import (
+    Order,
+    OrderItem,
+)
 from book.models import Book
 
-from .models import Order_Detail
-
-
 # Create your views here.
-
-def place(request):
-    
+def place_order(request, payment_method):
     template_name = 'order/complete.html'
-    
-    item_list = request.session.get('key_list', [])
+    context ={}
 
-    book_list = []
-    
+    item_list = request.session.get('key_list', [])
+    books = []
     order_value = 0
 
-    for i in range(0, len(item_list)):
-        temp_book = get_object_or_404(Book, id=item_list[i])
-        order_value += temp_book.sale_price
-        book_list.append(temp_book)
-        
-    order_row = Order(customer_id = 1, order_total = order_value)
-    order_row.save()
-    for i in range(0, len(book_list)):
-        order_detail_row = Order_Detail(book_id = book_list[i].id, vendor_id = 0, order = order_row)
-        order_detail_row.save()
-    
-    return render(request, template_name,{})
-    
-    
+    # for i in range(0, len(item_list)):
+    for iter_book in item_list:
+        book = get_object_or_404(
+            Book,
+            id=iter_book,
+        )
+        order_value += book.sale_price
+        books.append(book)
+
+    if not request.user.is_authenticated or not hasattr(request.user, 'customer'):
+        return redirect('/u/?next=' + request.path)
+    else:
+        order = Order(
+            customer=request.user.customer,
+            total=order_value,
+            payment_method=payment_method,
+        )
+        order.save()
+        for book in books:
+            order_item = OrderItem(
+                item=book.title,
+                price=book.sale_price,
+                vendor=book.vendor,
+                order=order,
+            )
+            order_item.save()
+
+        request.session['key_list'] = []
+        return render(request, template_name, context)
+
+def order_details(request, id):
+    template_name = 'order/details.html'
+    context = {}
+
+    order = get_object_or_404(
+        Order,
+        id=id,
+    )
+
+    order_items = OrderItem.objects.all().filter(
+        order=order,
+    )
+
+    context.update({
+        'order': order,
+        'order_items': order_items,
+    })
+
+    return render(request, template_name, context)

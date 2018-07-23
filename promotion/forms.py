@@ -3,7 +3,7 @@ from django.forms import ModelForm
 
 from .models import Promotion
 
-# Create you forms here
+# Create your forms here.
 class PromotionCreationForm(ModelForm):
 	class Meta:
 		model = Promotion
