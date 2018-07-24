@@ -3,12 +3,14 @@ from django.shortcuts import (
     get_object_or_404,
     redirect,
 )
+from django.template.loader import render_to_string
 
 from .models import (
     Order,
     OrderItem,
 )
 from book.models import Book
+from users.models import Customer
 
 # Create your views here.
 def place_order(request, payment_method):
@@ -45,7 +47,17 @@ def place_order(request, payment_method):
                 order=order,
             )
             order_item.save()
-
+        customer = get_object_or_404(
+            Customer,
+            user=request.user,
+        )
+        subject = 'Order Confirmation'
+        message = render_to_string('order/confirmation.html', {
+            'user': request.user,
+            'customer': customer,
+            'order': order,
+        })
+        request.user.email_user(subject, message)
         request.session['key_list'] = []
         return render(request, template_name, context)
 

@@ -1,0 +1,16 @@
+{% autoescape off %}
+
+Hi {{ user.username }},
+
+Order Confirmation for Order: {{ order.id }}
+
+Order Date: {{ order.order_date }}
+Total: {{ order.total }}
+
+Shipping Address:
+
+{{ customer.street_address }}
+{{ customer.city }}
+{{ customer.state }}
+{{ customer.zipcode }}
+{% endautoescape %}

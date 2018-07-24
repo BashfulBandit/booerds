@@ -40,6 +40,25 @@ from .forms import (
 	VendorChangeForm,
 )
 
+def deactivate(request, id):
+	template_name = ''
+	context = {}
+
+	print(request.user.id)
+	print(id)
+	if not request.user.is_authenticated or not str(request.user.id) == id:
+		print('home')
+		return redirect('bookstore:home')
+	else:
+		print("here")
+		user = get_object_or_404(
+			User,
+			id=id,
+		)
+		user.is_active = False
+		user.save()
+		return redirect('bookstore:home')
+
 def user_login(request):
     # Define the template and the empty context dict.
 	template_name = 'users/login.html'

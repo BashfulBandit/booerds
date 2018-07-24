@@ -33,16 +33,17 @@
   <div class="row justify-content-center p-1">
     <div class="col text-center">
       {% if profile.is_customer %}
-        <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
-        {% if profile.subscribed %}
-          <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Unsubscribe</a>
-        {% else %}
-          <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Subscribe</a>
-        {% endif %}
-      {% elif profile.is_vendor %}
-        <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
-        <a href="{% url 'book:add_book' request.user.id %}" class="btn btn-primary">Add Book</a>
+      <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
+      {% if profile.subscribed %}
+      <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Unsubscribe</a>
+      {% else %}
+      <a href="{% url 'users:unsubscribe' %}" class="btn btn-primary">Subscribe</a>
       {% endif %}
+      {% elif profile.is_vendor %}
+      <a href="{% url 'users:edit_profile' request.user.id %}" class="btn btn-primary">Edit Profile</a>
+      <a href="{% url 'book:add_book' request.user.id %}" class="btn btn-primary">Add Book</a>
+      {% endif %}
+      <a href="{% url 'users:deactivate' request.user.id %}" class="btn btn-primary">Remove Account</a>
     </div>
   </div>
   <!-- Orders or Books -->
